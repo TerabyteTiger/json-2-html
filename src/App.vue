@@ -1,17 +1,19 @@
 <template>
   <div id="app">
-    <img alt="Vue logo" src="./assets/logo.png" />
-    <HelloWorld msg="Welcome to Your Vue.js App" />
+    <GithubRibbon />
+    <json-input />
   </div>
 </template>
 
 <script>
-import HelloWorld from "./components/HelloWorld.vue";
+import GithubRibbon from "./components/GithubRibbon.vue";
+import JsonInput from "./components/JsonInput.vue";
 
 export default {
   name: "app",
   components: {
-    HelloWorld
+    GithubRibbon,
+    JsonInput
   }
 };
 </script>

@@ -1,5 +1,5 @@
 <template>
-  <form action="" @submit="jsonValidate">
+  <form action @submit.prevent="jsonValidate">
     <label for="jsonInput">JSON Format:</label>
     <textarea
       name="jsonInput"
@@ -8,7 +8,9 @@
       rows="10"
       v-model="jsonData"
     ></textarea>
+
     <input type="submit" value="Code, Please!" />
+    <p>{{ processed }}</p>
   </form>
 </template>
 
@@ -19,24 +21,37 @@ export default {
     return {
       jsonData: `{
   "name": "",
-  "birthday": Date,
+  "birthday": "March",
   "favoriteColor": ["yellow", "green", "blue", "other"]
 } `,
       processed: ""
     };
   },
   methods: {
-    jsonValidate: () => {
+    jsonValidate: function() {
       try {
-        let tempJson = this.jsonData.replace(
-          " Date,",
-          Date.now()
-        );
-        console.log(tempJson);
-        JSON.parse(tempJson);
-      } catch {
+        // TODO: Convert non-string entries of `Date`
+        //   into a timestamp to not break the parser 👇
+        const obj = JSON.parse(this.jsonData);
+        const keys = Object.keys(obj);
+        const values = Object.values(obj);
+
+        // And I loooop!
+        for (const item in keys) {
+          console.error(typeof values[item]);
+          typeof values[item] === "string"
+            ? this.processString(keys[item], values[item])
+            : null;
+        }
+      } catch (err) {
         alert("Invalid JSON");
       }
+    },
+    processString: function(key, value) {
+      this.processed =
+        this.processed +
+        `<label for="${key}">${key}</label>` +
+        `<input type="text" id="${key}" placeholder="${value}"/>`;
     }
   }
 };

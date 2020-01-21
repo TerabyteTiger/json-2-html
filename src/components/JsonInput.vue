@@ -10,7 +10,10 @@
     ></textarea>
 
     <input type="submit" value="Code, Please!" />
-    <p>{{ processed }}</p>
+
+    <pre style="text-align: left;">
+      {{ processed }}
+    </pre>
   </form>
 </template>
 
@@ -50,8 +53,9 @@ export default {
     processString: function(key, value) {
       this.processed =
         this.processed +
-        `<label for="${key}">${key}</label>` +
-        `<input type="text" id="${key}" placeholder="${value}"/>`;
+        `<label for="${key}">${key}</label>\n` +
+        `<br/>\n` +
+        `<input type="text" id="${key}" placeholder="${value}"/>\n`;
     }
   }
 };

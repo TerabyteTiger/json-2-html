@@ -7,18 +7,19 @@
         id="jsonInput"
         cols="30"
         rows="10"
-        v-model="jsonData"
+        v-model="jsonDisplayData"
       ></textarea>
       <input type="submit" value="Code, Please!" />
 
-      <pre style="text-align: left;">
-      {{ processed }}
-    </pre
-      >
+      <pre style="text-align: left;">{{ processed }}</pre>
     </form>
     <hr />
     <!-- Test Space 🌌 -->
     <form action="">
+      <!-- 
+        Feel free to add your output to ensure the
+        output is valid, but clear it before submitting a PR :]
+      -->
       <!-- START TEST SPACE -->
 
       <!-- END TEST SPACE -->
@@ -27,29 +28,55 @@
 </template>
 
 <script>
+import moment from "moment";
+
 export default {
   name: "JsonInput",
   data() {
     return {
-      jsonData: `{
+      jsonDisplayData: `{
   "name": "",
-  "birthday": "March",
+  "birthday": *Date,
+  "datetimeExample": *Datetime,
   "favoriteColor": ["yellow", "green", "blue", "other"]
 } `,
+      jsonData: "",
       processed: ""
     };
   },
   methods: {
     jsonValidate: function() {
       try {
-        // TODO: Convert non-string entries of `Date`
+        this.jsonData = this.jsonDisplayData;
+        // Clear previous processed data
+        this.processed = "";
+        // Setup for Catching Special Cases
         //   into a timestamp to not break the parser 👇
+        const now = moment().format("X");
+        const nowTime = moment().format("x");
+
+        let datePattern = /( \*Date,)/gi;
+        let datetimePattern = /( \*Datetime,)/gi;
+
+        // Repace *Date with now
+        this.jsonData = this.jsonData.replace(
+          datePattern,
+          " " + now + ","
+        );
+
+        // Replace *Datetime with nowTime
+        this.jsonData = this.jsonData.replace(
+          datetimePattern,
+          " " + nowTime + ","
+        );
+
         const obj = JSON.parse(this.jsonData);
         const keys = Object.keys(obj);
         const values = Object.values(obj);
 
         // And I loooop!
         for (const item in keys) {
+          console.log(this.processed);
           // Strings
           typeof values[item] === "string"
             ? this.processString(keys[item], values[item])
@@ -58,6 +85,17 @@ export default {
           typeof values[item] === "object"
             ? this.processObject(keys[item], values[item])
             : null;
+          // Date
+          typeof values[item] === "number" &&
+          values[item] == now
+            ? this.processDate(keys[item], values[item])
+            : null;
+          // Datetimes
+          typeof values[item] === "number" &&
+          values[item] == nowTime
+            ? this.processDatetime(keys[item], values[item])
+            : null;
+          // Number
         }
       } catch (err) {
         alert("Invalid JSON");
@@ -66,7 +104,7 @@ export default {
     processString: function(key, value) {
       this.processed =
         this.processed +
-        `<label for="${key}">${key}:</label>\n` +
+        `<label for="${key}"> ${key}: </label>\n` +
         `<br/>\n` +
         `<input type="text" id="${key}" placeholder="${value}"/>\n`;
     },
@@ -75,7 +113,7 @@ export default {
         // Array => Select
         this.processed =
           this.processed +
-          `<label for="${key}">${key}:</label>\n` +
+          `<label for="${key}"> ${key}: </label>\n` +
           `<br/>\n` +
           `<select id="${key}">\n`;
         for (const item in value) {
@@ -85,8 +123,19 @@ export default {
         }
         this.processed = this.processed + `</select>`;
       } else {
+        // TODO: Process Objects somehow?
         console.log("Object", key, value);
       }
+    },
+    processDate: function(key, value) {
+      this.processed =
+        this.processed +
+        `<label for="${key}"> ${key} </label>\n<br/>\n<input type="date" id="${key}">\n`;
+    },
+    processDatetime: function(key, value) {
+      this.processed =
+        this.processed +
+        `<label for="${key}"> ${key} </label>\n<br/>\n<input type="datetime-local" id="${key}">\n`;
     }
   }
 };

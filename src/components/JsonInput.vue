@@ -1,5 +1,46 @@
 <template>
   <div>
+    <div>
+      <h2>Inputs:</h2>
+      <table>
+        <tr>
+          <th>I need a _____:</th>
+          <th>JSON Format to use:</th>
+        </tr>
+        <tr>
+          <td>
+            String Input
+          </td>
+          <td>
+            "fieldName": "placeholder",
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Select
+          </td>
+          <td>
+            "fieldName": [Array of options],
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Date
+          </td>
+          <td>
+            "fieldName": *Date,
+          </td>
+        </tr>
+        <tr>
+          <td>
+            Datetime
+          </td>
+          <td>
+            "fieldName": *Datetime,
+          </td>
+        </tr>
+      </table>
+    </div>
     <form action @submit.prevent="jsonValidate">
       <label for="jsonInput">JSON Format:</label>
       <textarea

@@ -120,7 +120,6 @@ export default {
 
         // And I loooop!
         for (const item in keys) {
-          console.log(this.processed);
           // Strings
           typeof values[item] === "string"
             ? this.processString(keys[item], values[item])
@@ -165,7 +164,7 @@ export default {
             this.processed +
             `\t<option value="${value[item]}">${value[item]}</option>\n`;
         }
-        this.processed = this.processed + `</select>`;
+        this.processed = this.processed + `</select>\n`;
       } else {
         // TODO: Process Objects somehow?
         // Unsure what an Object would become in the context of a form?

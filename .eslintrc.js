@@ -7,11 +7,11 @@ module.exports = {
   rules: {
     "no-console":
       process.env.NODE_ENV === "production"
-        ? "error"
+        ? "warn"
         : "off",
     "no-debugger":
       process.env.NODE_ENV === "production"
-        ? "error"
+        ? "warn"
         : "off",
     "newline-per-chained-call": 0,
     "no-unused-vars": [

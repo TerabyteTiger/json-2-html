@@ -26,5 +26,10 @@ export default {
   text-align: center;
   color: #2c3e50;
   margin-top: 60px;
+  font-size: 1.2rem;
+}
+
+body {
+  background-color: hsl(280, 10%, 95%);
 }
 </style>

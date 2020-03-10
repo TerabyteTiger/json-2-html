@@ -4,8 +4,8 @@
       <h2>Inputs:</h2>
       <table>
         <tr>
-          <th>I need a _____:</th>
-          <th>JSON Format to use:</th>
+          <th>I need a _________:</th>
+          <th>JSON Example:</th>
         </tr>
         <tr>
           <td>
@@ -20,7 +20,7 @@
             Select
           </td>
           <td>
-            "fieldName": [Array of options],
+            "fieldName": ["Array", "of", "options"],
           </td>
         </tr>
         <tr>
@@ -42,7 +42,9 @@
       </table>
     </div>
     <form action @submit.prevent="jsonValidate">
-      <label for="jsonInput">JSON Format:</label>
+      <label for="jsonInput">
+        JSON to convert to HTML Form:
+      </label>
       <textarea
         name="jsonInput"
         id="jsonInput"
@@ -50,21 +52,22 @@
         rows="10"
         v-model="jsonDisplayData"
       ></textarea>
-      <input type="submit" value="Code, Please!" />
+      <button type="submit">Code, please!</button>
 
+      <h2 v-if="processed">HTML:</h2>
       <pre style="text-align: left;">{{ processed }}</pre>
     </form>
-    <hr />
     <!-- Test Space 🌌 -->
-    <form action="">
-      <!-- 
+    <!-- <form action=""> -->
+    <!-- 
         Feel free to add your output to ensure the
-        output is valid, but clear it before submitting a PR :]
+        output is valid, but clear it and re-comment out the form 
+        before submitting a PR :]
       -->
-      <!-- START TEST SPACE -->
+    <!-- START TEST SPACE -->
 
-      <!-- END TEST SPACE -->
-    </form>
+    <!-- END TEST SPACE -->
+    <!-- </form> -->
   </div>
 </template>
 
@@ -165,6 +168,7 @@ export default {
         this.processed = this.processed + `</select>`;
       } else {
         // TODO: Process Objects somehow?
+        // Unsure what an Object would become in the context of a form?
         console.log("Object", key, value);
       }
     },
@@ -184,7 +188,57 @@ export default {
 
 <style>
 form {
-  display: flex;
-  flex-direction: column;
+  width: 50%;
+  margin: auto;
+  padding: 35px 0;
+}
+
+form * {
+  margin-bottom: 15px;
+  width: 95%;
+}
+
+form button {
+  width: auto;
+}
+
+label {
+  font-size: 1.2rem;
+}
+
+table {
+  margin: auto;
+  min-width: 40%;
+  border-collapse: collapse;
+}
+
+td:first-child,
+th:first-child {
+  text-align: right;
+  width: 35%;
+}
+
+td:last-child,
+th:last-child {
+  text-align: left;
+  padding-left: 15px;
+}
+
+td,
+th {
+  padding: 5px;
+  border-bottom: 2px solid #716799;
+}
+
+th {
+  padding: 5px;
+}
+
+button {
+  background-color: #716799;
+  color: #c8ffde;
+  font-size: 1.3rem;
+  padding: 5px 25px;
+  border-radius: 7px;
 }
 </style>

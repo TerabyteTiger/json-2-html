@@ -1,6 +1,6 @@
 <template>
   <a
-    href="https://github.com/12vanblart/form-gen"
+    href="https://github.com/12vanblart/json-2-html"
     class="github-corner"
     aria-label="View source on GitHub"
   >
@@ -9,7 +9,7 @@
       width="80"
       height="80"
       viewBox="0 0 250 250"
-      style="fill:#151513; color:#fff; position: absolute; top: 0; border: 0; right: 0;"
+      style="fill:#71679B; color:#c8ffde; position: absolute; top: 0; border: 0; right: 0;"
       aria-hidden="true"
     >
       <path

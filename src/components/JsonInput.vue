@@ -53,10 +53,17 @@
         v-model="jsonDisplayData"
       ></textarea>
       <button type="submit">Code, please!</button>
-
-      <h2 v-if="processed">HTML:</h2>
-      <pre style="text-align: left;">{{ processed }}</pre>
     </form>
+    <transition name="bounce">
+      <Dialog
+        v-if="showDialog"
+        title="HTML"
+        v-on:close-dialog="handleDialog"
+      >
+        <!-- <h2 v-if="processed">HTML:</h2> -->
+        <pre style="text-align: left;">{{ processed }}</pre>
+      </Dialog>
+    </transition>
     <!-- Test Space 🌌 -->
     <!-- <form action=""> -->
     <!-- 
@@ -73,9 +80,11 @@
 
 <script>
 import moment from "moment";
+import Dialog from "./Dialog";
 
 export default {
   name: "JsonInput",
+  components: { Dialog },
   data() {
     return {
       jsonDisplayData: `{
@@ -85,7 +94,8 @@ export default {
   "favoriteColor": ["yellow", "green", "blue", "other"]
 } `,
       jsonData: "",
-      processed: ""
+      processed: "",
+      showDialog: false
     };
   },
   methods: {
@@ -140,6 +150,9 @@ export default {
             : null;
           // Number
         }
+
+        // Show Dialog
+        this.handleDialog();
       } catch (err) {
         alert("Invalid JSON");
       }
@@ -180,6 +193,9 @@ export default {
       this.processed =
         this.processed +
         `<label for="${key}"> ${key} </label>\n<br/>\n<input type="datetime-local" id="${key}">\n`;
+    },
+    handleDialog: function() {
+      this.showDialog = !this.showDialog;
     }
   }
 };
